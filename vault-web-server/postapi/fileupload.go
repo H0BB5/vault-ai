@@ -44,6 +44,7 @@ func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request)
 	responseData := UploadResponse{
 		SuccessfulFileNames: make([]string, 0),
 		FailedFileNames:     make(map[string]string),
+		FilePreviews:        make(map[string]string),
 	}
 
 	for _, file := range files {
@@ -101,7 +102,7 @@ func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request)
 					filePreview = fileContent[:32]
 				}
 				responseData.FilePreviews[fileName] = filePreview 
-				
+
 				chunks, err := chunk.CreateChunks(fileContent, fileName)
 				if err != nil {
 					errMsg := "Error chunking file"
