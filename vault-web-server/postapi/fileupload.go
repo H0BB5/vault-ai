@@ -100,7 +100,8 @@ func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request)
 				if len(fileContent) > 32 {
 					filePreview = fileContent[:32]
 				}
-
+				responseData.FilePreviews[fileName] = filePreview 
+				
 				chunks, err := chunk.CreateChunks(fileContent, fileName)
 				if err != nil {
 					errMsg := "Error chunking file"
