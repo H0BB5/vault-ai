@@ -46,6 +46,7 @@ func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request)
 	}
 
 	for _, file := range files {
+		filePreview := ""
 		fileName := file.Filename
 		if file.Size > MAX_FILE_SIZE {
 			errMsg := fmt.Sprintf("File size exceeds the %d bytes limit", MAX_FILE_SIZE)
