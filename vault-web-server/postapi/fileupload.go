@@ -16,6 +16,7 @@ type UploadResponse struct {
 	NumFilesFailed      int               `json:"num_files_failed"`
 	SuccessfulFileNames []string          `json:"successful_file_names"`
 	FailedFileNames     map[string]string `json:"failed_file_names"`
+	FilePreviews        map[string]string `json:"file_previews"`
 }
 
 const MAX_FILE_SIZE int64 = 10 << 20         // 10 MB
