@@ -65,7 +65,6 @@ func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request)
 
 		fileType := file.Header.Get("Content-Type")
 		fileContent := ""
-		filePreview := ""
 
 		if fileType == "application/pdf" {
 			fileContent, err = chunk.ExtractTextFromPDF(f, file.Size)

@@ -39,6 +39,49 @@ type Chunk struct {
 const MaxTokensPerChunk = 1500
 const EmbeddingModel = "text-embedding-ada-002"
 
+// ExtractFilesFromZip extracts the text from files within a zip file
+func ExtractFilesFromZip(f multipart.File) ([]string, []string, error) {
+	// Create a reader for the zip file
+	zipReader, err := zip.NewReader(f, f.Size())
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// Initialize a slice to store the content of each file
+	var fileContents []string
+	var fileNames []string
+
+	// Iterate over the files in the zip archive
+	for _, file := range zipReader.File {
+		// Skip directories
+		if file.FileInfo().IsDir() {
+			continue
+		}
+
+		// Open the current file
+		currentFile, err := file.Open()
+		if err != nil {
+			return nil, nil, err
+		}
+		defer currentFile.Close()
+
+		// Read the file's content
+		contentBytes, err := ioutil.ReadAll(currentFile)
+		if err != nil {
+			return nil, nil, err
+		}
+
+		// Convert the file's content to a string and append it to the slice
+		fileContents = append(fileContents, string(contentBytes))
+
+		// Append the file name to the fileNames slice
+		fileNames = append(fileNames, file.Name)
+	}
+
+	// Return the slice with file contents and file names
+	return fileContents, fileNames, nil
+}
+
 func CreateChunks(fileContent string, title string) ([]Chunk, error) {
 	chunks := []Chunk{}
 
