@@ -41,6 +41,19 @@ const EmbeddingModel = "text-embedding-ada-002"
 
 // ExtractFilesFromZip extracts the text from files within a zip file
 func ExtractFilesFromZip(f multipart.File) ([]string, []string, error) {
+	// Convert the multipart.File to a []byte
+	fileBytes, err := ioutil.ReadAll(f)
+	if err != nil {
+			return nil, nil, err
+	}
+
+	// Create a reader for the zip file
+	zipReader, err := zip.NewReader(bytes.NewReader(fileBytes), int64(len(fileBytes)))
+	if err != nil {
+			return nil, nil, err
+	}
+
+			
 	// Create a reader for the zip file
 	zipReader, err := zip.NewReader(f, f.Size())
 	if err != nil {

@@ -18,8 +18,8 @@ type UploadResponse struct {
 	FailedFileNames     map[string]string `json:"failed_file_names"`
 }
 
-const MAX_FILE_SIZE int64 = 25 << 20         // 3 MB
-const MAX_TOTAL_UPLOAD_SIZE int64 = 50 << 20 // 3 MB
+const MAX_FILE_SIZE int64 = 10 << 20         // 10 MB
+const MAX_TOTAL_UPLOAD_SIZE int64 = 10 << 20 // 10 MB
 
 func (ctx *HandlerContext) UploadHandler(w http.ResponseWriter, r *http.Request) {
 	r.Body = http.MaxBytesReader(w, r.Body, MAX_TOTAL_UPLOAD_SIZE)
