@@ -53,13 +53,6 @@ func ExtractFilesFromZip(f multipart.File) ([]string, []string, error) {
 			return nil, nil, err
 	}
 
-			
-	// Create a reader for the zip file
-	zipReader, err := zip.NewReader(f, f.Size())
-	if err != nil {
-		return nil, nil, err
-	}
-
 	// Initialize a slice to store the content of each file
 	var fileContents []string
 	var fileNames []string
